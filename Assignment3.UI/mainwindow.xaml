@@ -1,0 +1,35 @@
+﻿<Window x:Class="Assignment3.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Assignment3.UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <GroupBox Header="Unit" HorizontalAlignment="Left" Height="98" Margin="31,37,0,0" VerticalAlignment="Top" Width="150"/>
+
+        <GroupBox x:Name="ResultsGroupBox" Header="Your Results" HorizontalAlignment="Left" Height="190" Margin="66,219,0,0" VerticalAlignment="Top" Width="716">
+            <Label Content="BMI" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        </GroupBox>
+        <RadioButton x:Name="NonMetric_RadioBtn" Content="US Unit (Non-Metric)" HorizontalAlignment="Left" Margin="44,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Checked="NonMetric_RadioBtn_Checked" Click="NonMetric_RadioBtn_Click" IsChecked="True"/>
+        <TextBox x:Name="FirstName_Input" HorizontalAlignment="Left" Height="23" Margin="197,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" TextChanged="FirstName_Input_TextChanged"/>
+        <Label x:Name="FirstName_Label" Content="First Name" HorizontalAlignment="Left" Margin="198,11,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="LastName_Input" HorizontalAlignment="Left" Height="23" Margin="196,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165" TextChanged="LastName_Input_TextChanged"/>
+        <Label x:Name="LastName_Label" Content="Last Name" HorizontalAlignment="Left" Margin="197,68,0,0" VerticalAlignment="Top"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="66,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+        <TextBox x:Name="Height_Input" HorizontalAlignment="Left" Height="23" Margin="413,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48" TextChanged="Height_Input_TextChanged"/>
+        <Label x:Name="Height_Label" Content="Height" HorizontalAlignment="Left" Margin="413,68,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Weight_Label" Content="Weight" HorizontalAlignment="Left" Margin="413,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Weight_Input" HorizontalAlignment="Left" Height="23" Margin="413,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="48" TextChanged="Weight_Input_TextChanged" SpellCheck.IsEnabled="True"/>
+        <Button x:Name="Submit_Btn" Content="Submit" HorizontalAlignment="Left" Margin="348,157,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <RadioButton x:Name="Metric_RadioBtn" Content="World Unit (Metric)" HorizontalAlignment="Left" Margin="43,102,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Checked="Metric_RadioBtn_Checked" Click="Metric_RadioBtn_Click"/>
+        <Label x:Name="Bmi_Results" Content="Enter Height and Weight to see your BMI!" HorizontalAlignment="Left" Margin="197,245,0,0" VerticalAlignment="Top"/>
+        <Label Content="Weight Category" HorizontalAlignment="Left" Margin="82,294,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Bmi_Category" Content="Enter Height and Weight to See Your Weight Category" HorizontalAlignment="Left" Margin="196,294,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Height_Input_Inches" HorizontalAlignment="Left" Height="23" Margin="480,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="46"/>
+        <Label x:Name="Height_Input_Inches_Label" Content="Inches" HorizontalAlignment="Left" Margin="480,68,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="NormalWeightLabel" Content="" HorizontalAlignment="Left" Margin="82,347,0,0" VerticalAlignment="Top" Width="411" Background="White" Foreground="#FF57F90B"/>
+
+    </Grid>
+</Window>

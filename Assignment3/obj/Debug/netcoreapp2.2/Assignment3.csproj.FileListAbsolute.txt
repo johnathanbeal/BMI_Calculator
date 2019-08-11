@@ -1,0 +1,6 @@
+C:\Users\jbeal\source\repos\UCSDX\CSharp_For_Beginners\Assignment3\bin\Debug\netcoreapp2.2\Assignment3.deps.json
+C:\Users\jbeal\source\repos\UCSDX\CSharp_For_Beginners\Assignment3\bin\Debug\netcoreapp2.2\Assignment3.dll
+C:\Users\jbeal\source\repos\UCSDX\CSharp_For_Beginners\Assignment3\obj\Debug\netcoreapp2.2\Assignment3.csprojAssemblyReference.cache
+C:\Users\jbeal\source\repos\UCSDX\CSharp_For_Beginners\Assignment3\obj\Debug\netcoreapp2.2\Assignment3.csproj.CoreCompileInputs.cache
+C:\Users\jbeal\source\repos\UCSDX\CSharp_For_Beginners\Assignment3\obj\Debug\netcoreapp2.2\Assignment3.AssemblyInfoInputs.cache
+C:\Users\jbeal\source\repos\UCSDX\CSharp_For_Beginners\Assignment3\obj\Debug\netcoreapp2.2\Assignment3.AssemblyInfo.cs
