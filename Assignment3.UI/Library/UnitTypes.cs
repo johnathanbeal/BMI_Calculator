@@ -9,11 +9,4 @@ namespace Assignment3.UI.Library
         Metric,
         American
     }
-
-    public class UnitType
-    {
-        public bool? Metric { get; set; }
-
-        
-    }
 }

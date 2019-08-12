@@ -57,8 +57,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Library\ErrorMessages.cs" />
     <Compile Include="Library\Input.cs" />
-    <Compile Include="Library\Person.cs" />
     <Compile Include="Library\UnitTypes.cs" />
     <Page Include="mainwindow.xaml">
       <Generator>MSBuild:Compile</Generator>

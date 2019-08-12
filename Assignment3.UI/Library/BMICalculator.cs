@@ -7,81 +7,28 @@ namespace Assignment3.UI.Library
 {
     internal class BMICalculator
     {
-        private string name;
-        
-        private double _height;
-        private double _weight;
-
-        private UnitTypes unit;
+       
         private Validator valid;
-
-
-
+  
         public BMICalculator()
         {
             valid = new Validator();
         }
 
-        //public Person ProcessBmiInput(string firstName, string lastName, string height, string inches, string weight, bool? metric)
-        //{
-        //    //Person invalidInput = new Person() { BMI = null, Status = "Please try again with valid input" };
-
-        //    inches = ConvertEmptyToZero(inches);
-
-        //    //var _height = HeightSubProcess(height, inches, metric);
-        //    //if (_height == null)
-        //    //    return invalidInput;
-        //    //var _weight = Input.ReadDoubleFromWpfTextbox(weight);
-        //    //if (_weight == null)
-        //    //    return invalidInput;
-
-        //    //bool inchesValid = ValidateInputIsNotGreaterThanTwelve(inches);
-        //    //if (!inchesValid)
-        //    //    return invalidInput;
-
-        //    //bool heightIsValid = ValidateHeightIsWithinAcceptableRange(_height, (bool)metric);
-        //    //if (!heightIsValid)
-        //    //    return invalidInput;
-
-        //    //Person validInput = new Person(firstName, lastName, _height, _weight);
-
-        //    //if ((bool)metric)
-        //    //{
-        //    //    validInput.BMI = CalculateMetricBMI(_height, _weight);
-        //    //    validInput.NormalWeightHigh = ReverseCalculateHighWeightBMI(_height);
-        //    //    validInput.NormalWeightLow = ReverseCalculateLowWeightBMI(_height);
-        //    //}
-        //    //else
-        //    //{
-        //    //    validInput.BMI = CalculateAmericanBMI(_height, _weight);
-        //    //    validInput.NormalWeightHigh = ReverseCalculateAmericanHighWeightBMI(_height);
-        //    //    validInput.NormalWeightLow = ReverseCalculateAmericanLowWeightBMI(_height);
-        //    //}
-        //    //validInput.Status = CalculateNutritionalStatusFromBMI(validInput.BMI);
-        //    //if((firstName == "" && lastName == ""))
-        //    //{
-        //    //    validInput.Name = "Thomas Anderson";
-        //    //}
-            
-        //    //return validInput;
-        //}
-
-        public string GetName(string firstname, string lastname)
+        public double? ProcessWeight(string weight, bool metric, out string proWeightMessage)
         {
-            name = firstname + " " + lastname;
-            return name;
-        }
+            string readDoubleMessage;
+            var _weight = Input.ReadDoubleFromWpfTextbox(weight, out readDoubleMessage);
+            proWeightMessage = readDoubleMessage;
+            string validWeightMessage;
 
-        public Tuple<double, double> GetHeightAndWeight(string feetOrInches, string inches, string weight, bool metric)
-        {
-            _height = (double)ProcessHeight(feetOrInches, inches, metric);
-            _weight = (double)ProcessWeight(weight);
-            return new Tuple<double, double>(_height, _weight);
-        }
+            var validWeight = valid.ValidateWeight(_weight, metric, out validWeightMessage);
+            if (!validWeight)
+            {
+                proWeightMessage = validWeightMessage;
+                return null;
+            }
 
-        public double? ProcessWeight(string weight)
-        {
-            var _weight = Input.ReadDoubleFromWpfTextbox(weight);
             return _weight;
         }
 
@@ -89,7 +36,7 @@ namespace Assignment3.UI.Library
         {
             if (_weight == null || _height == null)
             {
-                Input.ReadErrorMessageOnce();
+                //Input.ReadErrorMessageOnce();
                 return false;
             }
             else
@@ -98,75 +45,100 @@ namespace Assignment3.UI.Library
             }
         }
 
-        private string ConvertEmptyToZero(string input)
+        private string ConvertEmptyToZero(string input, out string convertEmptyToZeroMessage)
         {
             Regex regexCharacters = new Regex("[A-Za-z0-9 _.,!\"'/$]*");
             Regex regexNumbers = new Regex("^[0 - 9]*");
             bool isNumber = regexNumbers.IsMatch(input);
 
-            if (isNumber)
+            if (isNumber && input != "")
             {
+                convertEmptyToZeroMessage = "string is a number";
                 return input;
             }
             else if (input == "")
-            {                
+            {
+                convertEmptyToZeroMessage = "string was empty and has been converted to a 0";
                 return "0";
             }
             else if (!isNumber)
             {
-                Input.ReadErrorMessageOnce();
-                return "not a number";
+                convertEmptyToZeroMessage = "input cannot be converted to a number";
+                return "";
             }
             else
             {
-                return "unknown";
+                convertEmptyToZeroMessage = "input cannot be converted to a number";
+                return "";
             }
         }
 
-        public double? ProcessHeight(string height, string inches, bool? metric)
+        public double? ProcessHeight(string height, string inches, bool? metric, out string message)
         {
             if (!(bool)metric)
             {
-                inches = ConvertEmptyToZero(inches);
-                var validInches = valid.ValidateInputIsNotGreaterThanTwelve(inches);
-                if (!validInches)
+                string convertEmptyToZeroMessage;
+                inches = ConvertEmptyToZero(inches, out convertEmptyToZeroMessage);
+                if (inches == "" || convertEmptyToZeroMessage == "input cannot be converted to a number")
+                {
+                    message = convertEmptyToZeroMessage;
                     return null;
+                }
+
+                string validateInputLessThanTwelve;
+                var validInches = valid.ValidateInputIsNotGreaterThanTwelve(inches, out validateInputLessThanTwelve);
+                if (!validInches)
+                {
+                    message = validateInputLessThanTwelve;
+                    return null;
+                }
             }
 
-            var subProHeight = HeightSubProcess(height, inches, metric);
+            string _heightSubProMessage;
+            var subProHeight = HeightSubProcess(height, inches, metric, out _heightSubProMessage);
+            message = _heightSubProMessage;
             if (subProHeight == null)
+            {            
                 return null;
+            }
 
-            var validHeightRange = valid.ValidateHeightIsWithinAcceptableRange(subProHeight, (bool)metric);
+            string validHeightRangeMessage;
+            var validHeightRange = valid.ValidateHeightIsWithinAcceptableRange(subProHeight, (bool)metric, out validHeightRangeMessage);
+            message = validHeightRangeMessage;
             if (!validHeightRange)
                 return null;
 
-            if (subProHeight == null)
-                return null;
-            
             if (subProHeight != null)
                 return subProHeight;
             else
                 return null;
         }
 
-        public double? HeightSubProcess(string height, string inches, bool? metric)
+        public double? HeightSubProcess(string height, string inches, bool? metric, out string heightSubProMessage)
         {
             int? usHeight = 0;
 
             if (!(bool)metric)
             {
-                usHeight = ((Input.ParseIntegerInput(height)) * 12);
+                string footOrMeterMessage;
+                usHeight = ((Input.ParseIntegerInput(height, out footOrMeterMessage)) * 12);
                 if (usHeight != null)
                 {
-                    usHeight = usHeight + (Input.ParseIntegerInput(inches));
+                    string inchesMessage;
+                    usHeight = usHeight + (Input.ParseIntegerInput(inches, out inchesMessage));
+                    heightSubProMessage = footOrMeterMessage + inchesMessage;
                 }
-            }            
-            
-            var metricHeight = Input.ReadDoubleFromWpfTextbox(height);
+                else
+                {
+                    heightSubProMessage = footOrMeterMessage;
+                }
+            }
 
+            string metricMessage;
+            var metricHeight = Input.ReadDoubleFromWpfTextbox(height, out metricMessage);
+            heightSubProMessage = metricMessage;
             if (!(bool)metric && usHeight != null)
-            {
+            {              
                 return usHeight;
             }
             else if ((bool)metric && metricHeight != null)
@@ -306,11 +278,6 @@ namespace Assignment3.UI.Library
                 return UnitTypes.Metric;
             else
                 return UnitTypes.American;
-        }
-
-        public void ResetErrorCounter()
-        {
-            Input.ResetCounter();
         }
 
     }

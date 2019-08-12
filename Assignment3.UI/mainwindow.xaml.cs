@@ -22,8 +22,6 @@ namespace Assignment3.UI
     public partial class MainWindow : Window
     {
 
-        
-
         public MainWindow()
         {
             InitializeComponent();
@@ -52,8 +50,8 @@ namespace Assignment3.UI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //var personBMI = bmicalc.ProcessBmiInput(FirstName_Input.Text, LastName_Input.Text, Height_Input.Text, Height_Input_Inches.Text, Weight_Input.Text, Metric_RadioBtn.IsChecked); ;
             BMICalculator bmicalc = new BMICalculator();
+            
             var feetOrMeters = Height_Input.Text;
             var inches = Height_Input_Inches.Text;
             var metric = Metric_RadioBtn.IsChecked;
@@ -69,8 +67,19 @@ namespace Assignment3.UI
                 name = "Jan Alleman";
             }
             ResultsGroupBox.Header = "Results: " + name;
-            height = bmicalc.ProcessHeight(feetOrMeters, inches, metric);
-            weight = bmicalc.ProcessWeight(Weight_Input.Text);
+            string heightInvalidMessage;
+            height = bmicalc.ProcessHeight(feetOrMeters, inches, metric, out heightInvalidMessage);
+            if (height == null)
+            {
+                ErrorMessages.ReadErrorMessageOnce(heightInvalidMessage);
+            }
+
+            string weightInvalidMessage;
+            weight = bmicalc.ProcessWeight(Weight_Input.Text, (bool)metric, out weightInvalidMessage);
+            if (weight == null)
+            {
+                ErrorMessages.ReadErrorMessageOnce(weightInvalidMessage);
+            }
 
             if (bmicalc.CalculateIfWeightAndHeightAreNotNull(weight, height))
             {               
@@ -92,7 +101,7 @@ namespace Assignment3.UI
             Bmi_Category.Content = status;
 
             NormalWeightLabel.Content = range;
-            bmicalc.ResetErrorCounter();
+            ErrorMessages.ResetErrorCounter();
         }
 
         private void NonMetric_RadioBtn_Checked(object sender, RoutedEventArgs e)

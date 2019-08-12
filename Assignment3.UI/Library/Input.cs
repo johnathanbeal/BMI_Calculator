@@ -18,8 +18,7 @@ namespace Assignment3.UI.Library
     /// 
     public class Input
     {
-        private static int counter = 0;
-        public static int? ParseIntegerInput (string wpfInput)
+        public static int? ParseIntegerInput (string wpfInput, out string message)
         {
             // Reads from the console until a correct integer is received
             bool goodNumber = false;
@@ -29,48 +28,30 @@ namespace Assignment3.UI.Library
 
                 if (!goodNumber)
                 {
-                    ReadErrorMessageOnce();
+                    message = "Please re-enter weight and/or height";
                     return null;
-                }             
-                    
-            return convertedValue;
+                }
+                else
+                {
+                    message = "";
+                    return convertedValue;
+                }                               
         }
 
-        public static double? ReadDoubleFromWpfTextbox(string textInput)
+        public static double? ReadDoubleFromWpfTextbox(string textInput, out string message)
         {
             // Reads from the console until a correct decimal is received
             double input = default(double);
             if (double.TryParse(textInput, out input))
             {
+                message = "";
                 return input;
             }
             else
             {
-                ReadErrorMessageOnce();
-
+                message = "Please re-enter weight and/or height";
                 return null;
             }
         }
-
-        public static void ReadErrorMessageOnce()
-        {
-            if (counter < 1)
-                MessageBox.Show("Please re-enter weight and/or height");
-            counter++;
-        }
-
-        public static void ReadErrorMessageOnce(string message)
-        {
-            if (counter< 1)
-                MessageBox.Show(message);
-            counter++;
-        }
-
-        public static void ResetCounter()
-        {
-            counter = 0;
-        }
     }
-
-
 }
